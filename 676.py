@@ -32,51 +32,28 @@ class MagicDictionary:
         self.trie = Trie()
         self.node = self.trie.root
  
-    def reset(self):
-        self.node = self.trie.root
+    # def reset(self):
+    #     self.node = self.trie.root
 
     def buildDict(self, dictionary):
         for text in dictionary:
             self.trie.insert(text)
         
     def search(self, searchWord):
-        self.reset()
-        pointer = 0
-        search_word_len = len(searchWord)
-        while pointer != search_word_len:
-            if pointer == search_word_len-1:
-                for next_node in self.node.child:
-                    print(next_node)
-                    if next_node != searchWord[pointer] and self.node.child[next_node].isEndOfWord:
-                        return True
-                return False
-            elif searchWord[pointer] in self.node.child:
-                self.node = self.node.child[searchWord[pointer]]
-                pointer += 1
-            else:
-                for incorrect_node in self.node.child:
-                    remain_word = searchWord[pointer+1:]
-                    if (self.checkInTrie(remain_word, self.node.child[incorrect_node]) == True):
-                        return True
-                return False
-            
+        node = self.node
+        return self.checkInTrie(searchWord, node, 1)
+    
+    def checkInTrie(self, subword, node, remain):
+        if not subword:
+            return True if remain == 0 and node.isEndOfWord else False
+        for key in node.child.keys():
+            if key == subword[0]:
+                if self.checkInTrie( subword[1:],node.child[key],remain):
+                    return True
+            elif remain == 1:
+                if self.checkInTrie( subword[1:],node.child[key],0):
+                    return True
         return False
-    def checkInTrie(self, subword, incorrect_node):
-        cur_node = incorrect_node
-        sub_pointer = 0
-        subword_len = len(subword)
-        while sub_pointer != subword_len:
-            # print(subword[sub_pointer])
-            # print(cur_node.child)
-            if subword[sub_pointer] in cur_node.child:
-                cur_node = cur_node.child[subword[sub_pointer]]
-                sub_pointer += 1
-            else:
-                return False
-        if cur_node.isEndOfWord:
-            return True
-        else:
-            return False
                 
             
         
@@ -84,7 +61,7 @@ class MagicDictionary:
 # Your MagicDictionary object will be instantiated and called as such:
             
 dictionary = ["hello", "hallo", "leetcode"]
-searchWord = "hello"
+searchWord = "haallo"
 test = MagicDictionary()
 test.buildDict(dictionary)
 param_2 = test.search(searchWord)
