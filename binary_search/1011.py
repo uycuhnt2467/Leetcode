@@ -61,7 +61,6 @@ class Solution(object):
             else:
                 # can load more
                 l = mid + 1
-        
         return r
 
 sol = Solution()
