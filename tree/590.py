@@ -47,5 +47,22 @@ class Solution(object):
                     root = None
         return returnList
                 
-            
-        
+# reverse version
+class Solution2:        
+    def postorder(self, root):  
+        returnList = []
+        stack = [root]
+        while stack:
+            root = stack.pop()
+            if root: 
+                returnList.append(root.val)
+                stack += root.children
+        return returnList[::-1]
+    
+    
+    
+    
+    
+    
+    
+    
