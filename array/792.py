@@ -95,17 +95,11 @@ class Solution:
                     return False
             else:
                 if char not in pos_dict:
-                    print("not in char", char)
                     return False
                 else:
                     temp_list = pos_dict[char]
-                    print("i", i)
-                    print("char", char)
-                    print("temp_list", temp_list)
                     i = self.binary_search(temp_list, i)
                     if i == -1:
-                        print("not in char 2", char)
-                        print(word)
                         return False
                 
         return True
@@ -130,7 +124,7 @@ class Solution:
                 else:
                     l = mid + 1
         if temp_list[mid] > i:
-            return mid
+            return temp_list[mid] 
         return -1
             
 
