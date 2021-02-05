@@ -47,7 +47,26 @@ class Solution:
         
         return int(cum_r - cum_l)
     
+    def numSubarrayBoundedMax_2(self, arr, l, r):
+        if not arr or not l or not r:
+            return -1
+        cum_l, cum_r = self.helper(arr, l-1), self.helper(arr, r)
+        return int(cum_r - cum_l)
+        
+    def helper(self, arr, max_):
+        i = 0 
+        cum_ = 0
+        cur_total = 0
+        while i < len(arr):
+            if arr[i] <= max_:
+                cur_total += 1
+                cum_ += cur_total
+            else:
+                cur_total = 0
+            i+= 1
+        return cum_
 sol = Solution()
 test = [2, 1, 4, 3]
-print(sol.numSubarrayBoundedMax(test, 2, 3))
+# print(sol.numSubarrayBoundedMax(test, 2, 3))
+print(sol.numSubarrayBoundedMax_2(test, 2, 3))
 
